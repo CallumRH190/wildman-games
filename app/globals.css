@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-barlow-condensed: 'Barlow Condensed', sans-serif;
+  --font-dm-sans: 'DM Sans', sans-serif;
+  --font-dm-mono: 'DM Mono', monospace;
+}
+
+@layer base {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body {
+    background-color: #0A0A0A;
+    color: #F5F2EE;
+    font-family: var(--font-dm-sans), sans-serif;
+    overflow-x: hidden;
+  }
+  ::selection { background: #C4AA87; color: #0A0A0A; }
+  img { display: block; }
+}
+
+/* ── NOISE TEXTURE ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+@layer components {
+  .section-label { @apply font-mono text-[10px] tracking-widest-3 uppercase text-stone-light; }
+  .display-headline {
+    font-family: var(--font-barlow-condensed), sans-serif;
+    font-weight: 800; line-height: 0.90; letter-spacing: -0.01em; text-transform: uppercase;
+  }
+  .body-text { font-family: var(--font-dm-sans), sans-serif; font-weight: 300; line-height: 1.75; color: #A89D92; }
+  .rule-top { @apply border-t border-white/10 pt-6; }
+  .container-tight { @apply max-w-5xl mx-auto px-6 md:px-10 lg:px-16; }
+  .container-wide { @apply max-w-7xl mx-auto px-6 md:px-10 lg:px-16; }
+  .section-dark { @apply bg-[#0A0A0A] text-offwhite; }
+  .section-charcoal { @apply bg-[#161616] text-offwhite; }
+  .section-light { @apply bg-[#F5F2EE] text-[#0A0A0A]; }
+  .section-sand { @apply bg-[#C4AA87] text-[#0A0A0A]; }
+
+  /* MAGNETIC BUTTONS */
+  .btn-primary {
+    position: relative; display: inline-flex; align-items: center; gap: 12px;
+    background: #C4AA87; color: #0A0A0A;
+    font-family: var(--font-dm-sans); font-weight: 500; font-size: 13px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 18px 32px; overflow: hidden; text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+  }
+  .btn-primary::before {
+    content: ''; position: absolute; inset: 0; background: #F5F2EE;
+    transform: translateX(-101%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .btn-primary:hover { transform: scale(1.03); box-shadow: 0 8px 32px rgba(196,170,135,0.25); }
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary > * { position: relative; z-index: 1; }
+
+  .btn-secondary {
+    position: relative; display: inline-flex; align-items: center; gap: 12px;
+    border: 1px solid rgba(255,255,255,0.3); color: #F5F2EE;
+    font-family: var(--font-dm-sans); font-weight: 500; font-size: 13px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 18px 32px; overflow: hidden; text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.3s ease;
+  }
+  .btn-secondary::before {
+    content: ''; position: absolute; inset: 0; background: rgba(196,170,135,0.08);
+    transform: translateX(-101%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .btn-secondary:hover { transform: scale(1.03); border-color: #C4AA87; }
+  .btn-secondary:hover::before { transform: translateX(0); }
+  .btn-secondary > * { position: relative; z-index: 1; }
+
+  .btn-primary-dark {
+    position: relative; display: inline-flex; align-items: center; gap: 12px;
+    background: #0A0A0A; color: #F5F2EE;
+    font-family: var(--font-dm-sans); font-weight: 500; font-size: 13px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 18px 32px; text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .btn-primary-dark:hover { transform: scale(1.03); }
+
+  .btn-secondary-dark {
+    position: relative; display: inline-flex; align-items: center; gap: 12px;
+    border: 1px solid rgba(0,0,0,0.25); color: #0A0A0A;
+    font-family: var(--font-dm-sans); font-weight: 500; font-size: 13px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 18px 32px; text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .btn-secondary-dark:hover { transform: scale(1.03); }
+}
+
+/* GSAP initial states */
+.gsap-reveal { opacity: 0; transform: translateY(40px); }
+.gsap-reveal-fast { opacity: 0; transform: translateY(20px); }
+
+/* STICKY DAYS */
+.day-card-wrap { height: 100vh; position: sticky; top: 0; }
+
+/* WORD REVEAL */
+.word-wrap { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.word-inner { display: inline-block; transform: translateY(110%); }
+
+/* UI elements */
+.hr-rule { height: 1px; background: linear-gradient(to right, transparent, rgba(196,170,135,0.3), transparent); }
+.img-overlay-dark { background: linear-gradient(to bottom, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0.6) 60%, rgba(10,10,10,0.95) 100%); }
+.img-overlay-darker { background: linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.65) 50%, rgba(10,10,10,0.97) 100%); }
+.stat-number { font-family: var(--font-barlow-condensed); font-weight: 800; letter-spacing: -0.02em; line-height: 1; color: #C4AA87; }
+.accent-bar { width: 32px; height: 2px; background-color: #C4AA87; display: block; flex-shrink: 0; }
+.nav-link { position: relative; transition: color 0.2s ease, transform 0.2s ease; }
+.nav-link:hover { transform: translateY(-1px); color: #C4AA87; }
+
+/* PILL NAV */
+.pill-nav { border-radius: 9999px; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #0A0A0A; }
+::-webkit-scrollbar-thumb { background: #3A3530; }
+::-webkit-scrollbar-thumb:hover { background: #C4AA87; }
+
+span[style*="box-sizing"] { display: block !important; }
